@@ -93,7 +93,6 @@ const store = createStore(reducer);
 
 const renderView = (todos) => {
   const todoList = document.querySelector('ul');
-
   todoList.innerHTML = null;
 
   todos.forEach((todo) => {

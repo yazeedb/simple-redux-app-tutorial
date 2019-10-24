@@ -26,11 +26,13 @@ h1 {
 input[type='text'] {
   width: 100%;
   padding: 16px;
-  font-style: italic;
   background-color: #292929;
   border: 1px solid #d0d0d0;
   color: #d0d0d0;
   font-size: 1.5em;
+}
+input[type='text']::placeholder {
+  font-style: italic;
 }
 
 ul {
