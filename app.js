@@ -105,9 +105,7 @@ const renderView = (todos) => {
     checkbox.toggleAttribute('checked', todo.completed);
 
     checkbox.addEventListener('click', () => {
-      const toggleAction = actions.toggleTodo(todo.id);
-
-      store.dispatch(toggleAction);
+      store.dispatch(actions.toggleTodo(todo.id));
     });
 
     const textLabel = document.createElement('label');
@@ -115,6 +113,9 @@ const renderView = (todos) => {
 
     const deleteButton = document.createElement('button');
     deleteButton.innerHTML = 'X';
+    deleteButton.addEventListener('click', () => {
+      store.dispatch(actions.deletedTodo(todo.id));
+    });
 
     li.append(checkbox, textLabel, deleteButton);
 
@@ -122,10 +123,30 @@ const renderView = (todos) => {
   });
 };
 
-store.subscribe(() => {
-  const state = store.getState();
+const init = () => {
+  const input = document.querySelector('input');
 
-  console.log(state);
+  input.addEventListener('keyup', (event) => {
+    const value = event.target.value.trim();
 
-  renderView(state.todos);
-});
+    if (!value) {
+      return;
+    }
+
+    const ENTER_KEYCODE = 13;
+
+    if (event.keyCode === ENTER_KEYCODE) {
+      store.dispatch(actions.addTodo(value));
+
+      event.target.value = '';
+    }
+  });
+
+  store.subscribe(() => {
+    const state = store.getState();
+
+    renderView(state.todos);
+  });
+};
+
+init();
